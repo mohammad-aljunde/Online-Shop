@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-bold">
+                        <label style="font-size:23px; color:steelblue">
+                            @{
+                                string title = item.Name;
+                                string final = " ";
+                                string[] arr = title.Split(" ");
+                                for (int i = 0; i < arr.Count(); i++)
+                                {
+                                    final += arr[i] +" ";
+                                    if(i == 2)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            @final
+                                
+                        </label>
+                    </h4>
+                </div>
+                <img src="@Url.Content(item.Image)" style="height:300px;" />
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn btn-group">
+                            <label style="font-size:20px; color:#ff0000"><b>Price : @decimal.Truncate(item.Price) $</b></label>
+                        </div>
+                        <a asp-action="Details" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(function () {
+
+            var register = '@TempData["register"]'
+            if (register != '') {
+                alertify.success(register);
+            }
+            var Login = '@TempData["Login"]'
+            if (Login != '') {
+                alertify.success(Login);
+            }
+
+           
+        })
+    </script>
+
+
+}

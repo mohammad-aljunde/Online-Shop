@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Index";
+    ViewData["controller"]="Product";
+}
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Product List</h2>
+    </div>
+    
+</div>
+<br />
+<form method="post">
+    <p class="lead">You can Search By Price :</p>
+    <div class="row">
+        <div class="col-3">
+            <label>From :
+                <input type="number" class="form-control" name="lowAmmount" />
+            </label>
+        </div>
+        <div class="col-3">
+            <label>To :
+                <input type="number" class="form-control" name="largAmmount" />
+            </label> 
+        </div>
+        <div class="col-3">
+            <label> Press:
+                <input type="submit" class="btn btn-success" value="Search" style="margin-bottom:-10px;" />
+            </label>
+        </div>
+        <div class="col-3 text-right">
+                <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp; Add New Product </a>
+        </div>
+    </div>
+</form>
+<br />
+<div>
+    <table class="table table-striped border" id="myTable">
+        <thead>
+            <tr class="table-info">
+                <th>
+                    @Html.DisplayNameFor(x => x.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(x => x.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(x => x.ProductColor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(x => x.IsAvailable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(x => x.ProductTypes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(x => x.SpecialTags)
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <div style="background-color:@item.ProductColor; width:30px;height:30px"></div>
+                    </td>
+                    <td>@item.IsAvailable</td>
+                    <td>@item.ProductTypes.ProductType</td>
+                    <td>@item.SpecialTags.SpecialTag</td>
+                    <td><partial name="_ButtonPartial" model="@item.Id" view-data="ViewData" /></td>
+                </tr>
+            }
+        </tbody>
+       
+    </table>
+</div>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]});
+        });
+
+        $(function () {
+
+            var save = '@TempData["save"]'
+            if (save != '') {
+                alertify.success(save);
+            }
+            var update = '@TempData["update"]'
+            if (update != '') {
+                alertify.success(update);
+            }
+
+            var del = '@TempData["del"]'
+            if (del != '') {
+                alertify.error(del);
+            }
+        })
+    </script>
+
+
+}
+

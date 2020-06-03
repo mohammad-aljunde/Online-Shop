@@ -1,0 +1,35 @@
+﻿@model int
+
+@{ 
+    var controller = (string)ViewData["Controller"];
+}
+
+<td style="width:150px">
+    @if(controller.Equals("Type")){
+
+    <div class="btn-group">
+        <a asp-action="Edit" asp-controller="ProductTypes" asp-route-id="@Model" class="btn btn-primary"><i class="far fa-edit"></i></a>
+        <a asp-action="Delete" asp-controller="ProductTypes" asp-route-id="@Model" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+        <a asp-action="Details" asp-controller="ProductTypes" asp-route-id="@Model" class="btn btn-success"><i class="fas fa-list-ul"></i></a>
+    </div>
+
+
+    }
+    else if(controller.Equals("Tag")) {
+        <div class="btn-group">
+    <a asp-action="Edit" asp-controller="SpecialTags" asp-route-id="@Model" class="btn btn-primary"><i class="far fa-edit"></i></a>
+    <a asp-action="Delete" asp-controller="SpecialTags" asp-route-id="@Model" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+    <a asp-action="Details" asp-controller="SpecialTags" asp-route-id="@Model" class="btn btn-success"><i class="fas fa-list-ul"></i></a>
+    </div>
+    }
+    else
+    {
+      <div class="btn-group">
+    <a asp-action="Edit" asp-controller="Product" asp-route-id="@Model" class="btn btn-primary"><i class="far fa-edit"></i></a>
+    <a asp-action="Delete" asp-controller="Product" asp-route-id="@Model" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+    <a asp-action="Details" asp-controller="Product" asp-route-id="@Model" class="btn btn-success"><i class="fas fa-list-ul"></i></a>
+       </div>
+    }
+
+
+</td>
